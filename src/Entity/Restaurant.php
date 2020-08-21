@@ -36,6 +36,11 @@ class Restaurant
      */
     private $slots;
 
+    /**
+     * @ORM\OneToOne(targetEntity=RestaurantImage::class, cascade={"persist", "remove"})
+     */
+    private $image;
+
     public function __construct()
     {
         $this->slots = new ArrayCollection();
@@ -97,6 +102,18 @@ class Restaurant
                 $slot->setRestaurant(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImage(): ?RestaurantImage
+    {
+        return $this->image;
+    }
+
+    public function setImage(?RestaurantImage $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }
