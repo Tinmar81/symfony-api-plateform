@@ -7,9 +7,24 @@ use App\Repository\RestaurantRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     itemOperations={
+ *      "get_full"={
+            "method"="GET",
+ *          "path"="/restaurants/{id}/full",
+ *          "normalization_context"={"groups"={"listRestaurantsFull"}}
+ *      },
+ *      "get_restaurant_slots"={
+ *          "method"="GET",
+ *          "path"="/restaurants/{id}/slots",
+ *          "normalization_context"={"groups"={"listRestaurantsSlots"}}
+ *      }
+ *     },
+ *     collectionOperations={"get"}
+ * )
  * @ORM\Entity(repositoryClass=RestaurantRepository::class)
  */
 class Restaurant
@@ -18,26 +33,31 @@ class Restaurant
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"listRestaurantsShort","listRestaurantsFull"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"listRestaurantsFull"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"listRestaurantsFull"})
      */
     private $description;
 
     /**
      * @ORM\OneToMany(targetEntity=Slot::class, mappedBy="restaurant")
+     * @Groups({"listRestaurantsFull","listRestaurantsSlots"})
      */
     private $slots;
 
     /**
      * @ORM\OneToOne(targetEntity=RestaurantImage::class, cascade={"persist", "remove"})
+     * @Groups({"listRestaurantsFull"})
      */
     private $image;
 
