@@ -18,25 +18,25 @@ class RestaurantImage
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"listRestaurantsFull","get"})
+     * @Groups({"restaurantFull","get"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"listRestaurantsFull","get" })
+     * @Groups({"restaurantFull","get" })
      */
     private $path;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"listRestaurantsFull", "get"})
+     * @Groups({"restaurantFull", "get"})
      */
     private $format;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"listRestaurantsFull","get"})
+     * @Groups({"restaurantFull","get"})
      */
     private $filename;
 
