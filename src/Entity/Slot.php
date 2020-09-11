@@ -36,14 +36,14 @@ class Slot
     private $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="time")
      * @ApiSubresource()
      * @Groups({"restaurantFull"})
      */
     private $slot_from;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="time")
      * @ApiSubresource()
      * @Groups({"restaurantFull"})
      */
@@ -66,6 +66,11 @@ class Slot
      */
     private $bookings;
 
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $date;
+
     public function __construct()
     {
         $this->bookings = new ArrayCollection();
@@ -76,24 +81,24 @@ class Slot
         return $this->id;
     }
 
-    public function getSlotFrom(): ?string
+    public function getSlotFrom(): ?\DateTimeInterface
     {
         return $this->slot_from;
     }
 
-    public function setSlotFrom(string $slot_from): self
+    public function setSlotFrom(DateTimeInterface $slot_from): self
     {
         $this->slot_from = $slot_from;
 
         return $this;
     }
 
-    public function getSlotTo(): ?string
+    public function getSlotTo(): ?\DateTimeInterface
     {
         return $this->slot_to;
     }
 
-    public function setSlotTo(string $slot_to): self
+    public function setSlotTo(DateTimeInterface $slot_to): self
     {
         $this->slot_to = $slot_to;
 
@@ -151,6 +156,18 @@ class Slot
                 $booking->setSlot(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
 
         return $this;
     }
