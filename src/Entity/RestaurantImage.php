@@ -2,11 +2,15 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\RestaurantImageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * @ORM\Entity(repositoryClass=RestaurantImageRepository::class)
+ * @ApiResource()
  */
 class RestaurantImage
 {
@@ -14,23 +18,27 @@ class RestaurantImage
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"listRestaurantsFull","get"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     */
-    private $filename;
-
-    /**
-     * @ORM\Column(type="string", length=255)
+     * @Groups({"listRestaurantsFull","get" })
      */
     private $path;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"listRestaurantsFull", "get"})
      */
     private $format;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"listRestaurantsFull","get"})
+     */
+    private $filename;
 
     public function getId(): ?int
     {

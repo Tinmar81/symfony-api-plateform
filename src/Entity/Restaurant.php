@@ -2,18 +2,22 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Repository\RestaurantRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ApiResource(
+ *     normalizationContext={"groups"={"get"}},
  *     itemOperations={
  *      "get_full"={
-            "method"="GET",
+ *          "method"="GET",
  *          "path"="/restaurants/{id}/full",
  *          "normalization_context"={"groups"={"listRestaurantsFull"}}
  *      },
@@ -21,9 +25,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "method"="GET",
  *          "path"="/restaurants/{id}/slots",
  *          "normalization_context"={"groups"={"listRestaurantsSlots"}}
- *      }
+ *      },
  *     },
- *     collectionOperations={"get"}
+ *     collectionOperations={"get"},
+ *     attributes={
+ *          "order"={"name":"ASC"}
+ *     }
  * )
  * @ORM\Entity(repositoryClass=RestaurantRepository::class)
  */
@@ -33,31 +40,32 @@ class Restaurant
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"listRestaurantsShort","listRestaurantsFull"})
+     * @Groups({"listRestaurantsShort","listRestaurantsFull", "get"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"listRestaurantsFull"})
+     * @Groups({"listRestaurantsFull", "get"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"listRestaurantsFull"})
+     * @Groups({"listRestaurantsFull", "get"})
      */
     private $description;
 
     /**
      * @ORM\OneToMany(targetEntity=Slot::class, mappedBy="restaurant")
-     * @Groups({"listRestaurantsFull","listRestaurantsSlots"})
+     * @Groups({"listRestaurantsFull","listRestaurantsSlots", "get"})
      */
     private $slots;
 
     /**
      * @ORM\OneToOne(targetEntity=RestaurantImage::class, cascade={"persist", "remove"})
-     * @Groups({"listRestaurantsFull"})
+     * @Groups({"listRestaurantsFull", "get"})
+     * @ApiSubresource()
      */
     private $image;
 
