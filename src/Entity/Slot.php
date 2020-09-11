@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
+use Symfony\Component\Serializer\Annotation\Groups;
 use App\Repository\SlotRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -10,6 +12,17 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=SlotRepository::class)
+ * @ApiResource(
+ *     itemOperations={
+ *      "get_slot_full"={
+ *          "method"="GET",
+ *          "path"="/slots/{id}/full",
+ *      }
+ *     },
+ *     collectionOperations={
+ *      "get_restaurants_slots_all"={"method"="GET"}
+ *     },
+ * )
  */
 class Slot
 {
@@ -17,21 +30,29 @@ class Slot
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @ApiSubresource()
+     * @Groups({"restaurantFull"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string")
+     * @ApiSubresource()
+     * @Groups({"restaurantFull"})
      */
     private $slot_from;
 
     /**
      * @ORM\Column(type="string")
+     * @ApiSubresource()
+     * @Groups({"restaurantFull"})
      */
     private $slot_to;
 
     /**
      * @ORM\Column(type="smallint")
+     * @ApiSubresource()
+     * @Groups({"restaurantFull"})
      */
     private $affluence;
 
