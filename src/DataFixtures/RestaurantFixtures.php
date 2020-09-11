@@ -18,6 +18,7 @@ class RestaurantFixtures extends Fixture implements DependentFixtureInterface
         "sushi-master" => "Sushi Master",
         "tapas-tapas" => "Tapas Tapas"
     ];
+    const RESTAURANT_SLOT_REF = "restaurant-slot";
 
     public function load(ObjectManager $manager)
     {
@@ -28,6 +29,8 @@ class RestaurantFixtures extends Fixture implements DependentFixtureInterface
                 ->setDescription($faker->text(200))
                 ->setImage($this->getReference(RestaurantImageFixtures::RESTAURANT_IMG_REF . "-$imgRef"));
             $manager->persist($restaurant);
+
+            $this->addReference(self::RESTAURANT_SLOT_REF. "-" . $imgRef, $restaurant);
         }
 
         $manager->flush();
