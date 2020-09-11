@@ -21,12 +21,12 @@ class Slot
     private $id;
 
     /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="string")
      */
     private $slot_from;
 
     /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="string")
      */
     private $slot_to;
 
@@ -55,24 +55,24 @@ class Slot
         return $this->id;
     }
 
-    public function getSlotFrom(): ?\DateTimeInterface
+    public function getSlotFrom(): ?string
     {
         return $this->slot_from;
     }
 
-    public function setSlotFrom(\DateTimeInterface $slot_from): self
+    public function setSlotFrom(string $slot_from): self
     {
         $this->slot_from = $slot_from;
 
         return $this;
     }
 
-    public function getSlotTo(): ?\DateTimeInterface
+    public function getSlotTo(): ?string
     {
         return $this->slot_to;
     }
 
-    public function setSlotTo(\DateTimeInterface $slot_to): self
+    public function setSlotTo(string $slot_to): self
     {
         $this->slot_to = $slot_to;
 
