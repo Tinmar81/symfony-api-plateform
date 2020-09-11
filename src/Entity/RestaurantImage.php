@@ -10,7 +10,17 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=RestaurantImageRepository::class)
- * @ApiResource()
+ * @ApiResource(
+ *     itemOperations={
+ *      "get_image_full"={
+ *          "method"="GET",
+ *          "path"="/restaurant_images/{id}/full",
+ *      }
+ *     },
+ *     collectionOperations={
+ *      "get_restaurants_all"={"method"="GET"}
+ *     }
+ * )
  */
 class RestaurantImage
 {
