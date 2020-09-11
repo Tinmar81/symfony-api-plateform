@@ -14,9 +14,8 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ApiResource(
- *     normalizationContext={"groups"={"get"}},
  *     itemOperations={
- *      "get_full"={
+ *      "get_restaurant_full"={
  *          "method"="GET",
  *          "path"="/restaurants/{id}/full",
  *          "normalization_context"={"groups"={"restaurantFull"}}
@@ -27,7 +26,12 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *          "normalization_context"={"groups"={"restaurantSlots"}}
  *      },
  *     },
- *     collectionOperations={"get"},
+ *     collectionOperations={
+ *      "get_restaurants_all"={
+ *          "method"="GET",
+ *          "normalization_context"={"groups"={"restaurantAll"}}
+ *       }
+ *     },
  *     attributes={
  *          "order"={"name":"ASC"}
  *     }
@@ -40,31 +44,31 @@ class Restaurant
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"restaurantSlots","restaurantFull", "get"})
+     * @Groups({"restaurantSlots","restaurantFull", "restaurantAll"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"restaurantFull", "get"})
+     * @Groups({"restaurantFull", "restaurantAll"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"restaurantFull", "get"})
+     * @Groups({"restaurantFull", "restaurantAll"})
      */
     private $description;
 
     /**
      * @ORM\OneToMany(targetEntity=Slot::class, mappedBy="restaurant")
-     * @Groups({"restaurantFull","restaurantSlots", "get"})
+     * @Groups({"restaurantFull","restaurantSlots", "restaurantAll"})
      */
     private $slots;
 
     /**
      * @ORM\OneToOne(targetEntity=RestaurantImage::class, cascade={"persist", "remove"})
-     * @Groups({"restaurantFull", "get"})
+     * @Groups({"restaurantFull", "restaurantAll"})
      * @ApiSubresource()
      */
     private $image;
